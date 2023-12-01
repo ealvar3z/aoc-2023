@@ -1,5 +1,5 @@
 input = File
-  .readlines("in.txt")
+  .readlines("input/day01.txt")
   .map(&:strip)
   .reject(&:empty?)
 
