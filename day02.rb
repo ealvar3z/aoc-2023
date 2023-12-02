@@ -1,4 +1,4 @@
-input = File.open("input/day02.txt")
+require_relative 'lib/utils'
 
 # Sample input for part_one
 _input = <<~DATA
@@ -18,11 +18,18 @@ __input = <<~DATA
   Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green
 DATA
 
+# Maximum cubes in the bag
+max_cubes = { 'red' => 12, 'green' => 13, 'blue' => 14 }
+def game_possible?(game_data, max_cubes)
+  game_data.all? do |set|
+    set.all? { |color, count| count <= max_cubes[color] }
+  end
+end
 
-def part_one
+def part_one(input, max_cubes)
   total_id_sum = 0
 
-  input.each_line do |line|
+  input.join("\n").each_line do |line|
     game_id, sets = line.split(':')
     game_id = game_id[/\d+/].to_i  # Extracting game ID number
 
@@ -32,21 +39,13 @@ def part_one
 
     total_id_sum += game_id if game_possible?(sets_data, max_cubes)
   end
-  p total_id_sum
-end
-
-# Maximum cubes in the bag
-max_cubes = { 'red' => 12, 'green' => 13, 'blue' => 14 }
-def game_possible?(game_data, max_cubes)
-  game_data.all? do |set|
-    set.all? { |color, count| count <= max_cubes[color] }
-  end
+  total_id_sum
 end
 
 def part_two(input)
   total_power = 0
 
-  input.each_line do |line|
+  input.join("\n").each_line do |line|
     sets_data = line.split(':').last.split(';').map do |set|
       set.scan(/(\d+) (red|green|blue)/).map { |count, color| [color, count.to_i] }.to_h
     end
@@ -59,9 +58,10 @@ def part_two(input)
     power = min_cubes.values.inject(:*) || 0
     total_power += power
   end
-
   total_power
 end
 
-p part_two(input)
+file = Utils.read_input("input/day02.txt")
 
+p "#{part_one(file, max_cubes)}"
+p "#{part_two(file)}"
