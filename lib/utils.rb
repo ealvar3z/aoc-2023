@@ -10,9 +10,6 @@ module Utils
     else
       file = ARGV.first
       File.read(file)
-    rescue Errno::ENOENT
-      p "#{file} not found"
-      exit 1
     end
   end
 
