@@ -1,3 +1,5 @@
+input = File.open("input/day02.txt")
+
 # Sample input for part_one
 _input = <<~DATA
   Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green
@@ -7,16 +9,15 @@ _input = <<~DATA
   Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green
 DATA
 
-# Maximum cubes in the bag
-max_cubes = { 'red' => 12, 'green' => 13, 'blue' => 14 }
+# Sample input for part_two
+__input = <<~DATA
+  Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green
+  Game 2: 1 blue, 2 green; 3 green, 4 blue, 1 red; 1 green, 1 blue
+  Game 3: 8 green, 6 blue, 20 red; 5 blue, 4 red, 13 green; 5 green, 1 red
+  Game 4: 1 green, 3 red, 6 blue; 3 green, 6 red; 3 green, 15 blue, 14 red
+  Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green
+DATA
 
-def game_possible?(game_data, max_cubes)
-  game_data.all? do |set|
-    set.all? { |color, count| count <= max_cubes[color] }
-  end
-end
-
-input = File.open("input/day02.txt")
 
 def part_one
   total_id_sum = 0
@@ -34,14 +35,13 @@ def part_one
   p total_id_sum
 end
 
-# Sample input for part_two
-__input = <<~DATA
-  Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green
-  Game 2: 1 blue, 2 green; 3 green, 4 blue, 1 red; 1 green, 1 blue
-  Game 3: 8 green, 6 blue, 20 red; 5 blue, 4 red, 13 green; 5 green, 1 red
-  Game 4: 1 green, 3 red, 6 blue; 3 green, 6 red; 3 green, 15 blue, 14 red
-  Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green
-DATA
+# Maximum cubes in the bag
+max_cubes = { 'red' => 12, 'green' => 13, 'blue' => 14 }
+def game_possible?(game_data, max_cubes)
+  game_data.all? do |set|
+    set.all? { |color, count| count <= max_cubes[color] }
+  end
+end
 
 def part_two(input)
   total_power = 0
