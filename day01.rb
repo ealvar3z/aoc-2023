@@ -16,6 +16,10 @@ DIGITS = %w(zero one two three four five six seven eight nine)
 HASHED = DIGITS.zip( (0...(DIGITS.length)).to_a.map(&:to_s) ).to_h
 
 def part_two(lines)
+  lines.each do |l|
+    d = l.scan(/(?=(\d|#{DIGITS.join('|')}))/)
+    p d
+  end
   lines.sum do |line|
     digits = line.scan(/(?=(\d|#{DIGITS.join('|')}))/).flatten
 
